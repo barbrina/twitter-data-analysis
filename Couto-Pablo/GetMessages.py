@@ -34,10 +34,12 @@ mensagens=[]
 
 # Pega mensagens de cada seguidor
 count=1
+iterator=1
 for user in seguidores:
     try:
         for status in tweepy.Cursor(api.user_timeline, user_id=user, tweet_mode="extended").items(20):
             mensagens.append(status.full_text)
+            iterator=iterator+1
     except tweepy.errors.TweepyException:
         print("erro mensagens")
     print(count)
@@ -47,7 +49,7 @@ for user in seguidores:
 # Salva em arquivo
 file = codecs.open("./backup/tweets.txt", "w", "utf-8")
 for item in mensagens:
-    file.write(u'{item}')
+    file.write("%s\n" % item)
 print('Done')
 file.close()
 # Salva em arquivo

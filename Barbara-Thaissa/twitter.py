@@ -74,10 +74,10 @@ for userID in user_list:
     temp['target'] = follower_list[0]
     temp['source'] = userID
     df = df.append(temp)
-    df.to_csv("networkOfFollowers.csv")
+    df.to_csv("./Barbara-Thaissa/networkOfFollowers.csv")
 
 
-df = pd.read_csv("networkOfFollowers.csv")  # Read into a df
+df = pd.read_csv("./Barbara-Thaissa/networkOfFollowers.csv")  # Read into a df
 
 display(df)
 
@@ -124,11 +124,11 @@ nodes = nx.draw_networkx_nodes(G_tmp, pos,
 nodes.set_edgecolor('k')
 nx.draw_networkx_labels(G_tmp, pos, font_size=4)
 nx.draw_networkx_edges(G_tmp, pos, width=1.0, alpha=0.2)
-plt.savefig('twitterFollowers.png')
+plt.savefig('./Barbara-Thaissa/twitterFollowers.png')
 
 # I've found Gephi really likes when your node column is called 'Id'
 combined = combined.rename(columns={"names": "Id"})
 edges = nx.to_pandas_edgelist(G_tmp)
 nodes = combined['Id']
-edges.to_csv("edges.csv", index=False)
-combined.to_csv("nodes.csv", index=False)
+edges.to_csv("./Barbara-Thaissa/edges.csv", index=False)
+combined.to_csv("./Barbara-Thaissa/nodes.csv", index=False)
