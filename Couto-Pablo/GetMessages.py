@@ -2581,31 +2581,22 @@ filehandle.close()
 # Pega seguidores do arquivo
 
 # !!!!!!!!!!! Teste   
-seguidores = seguidores[0:10]
+seguidores = seguidores[8024:20206]
 # !!!!!!!!!!! Teste  
 
 mensagens=[]
 
 # Pega mensagens de cada seguidor
-count=1
-iterator=1
+count=8025
+file = codecs.open("./backup/tweets.txt", "w", "utf-8")
 for user in seguidores:
     try:
         for status in tweepy.Cursor(api.user_timeline, user_id=user, tweet_mode="extended").items(20):
-            mensagens.append(status.full_text)
-            iterator=iterator+1
+            item=deEmojify(status.full_text)
+            file.write("%s\n" % (item+';;;'))
     except tweepy.errors.TweepyException:
         print("erro mensagens")
     print(count)
     count=count+1
-# Pega mensagens de cada seguidor
-
-# Salva em arquivo
-file = codecs.open("./backup/tweets.txt", "w", "utf-8")
-for item in mensagens:
-    item = deEmojify(item)
-    print(item)
-    file.write("%s\n" % item)
-print('Done')
 file.close()
-# Salva em arquivo
+# Pega mensagens de cada seguidor
