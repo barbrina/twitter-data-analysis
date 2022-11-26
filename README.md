@@ -254,7 +254,7 @@ O nó da minha rede com o grau mais alto é o nó **NÚMERO** ou **NOME DE USUÁ
 
 Como a rede é muito grande agora (mais de **NÚMERO** mil nós), qualquer análise levará muito tempo para ser executada e qualquer visualização será uma bagunça completa. No restante deste tutorial, filtraremos a rede para um número mais gerenciável de nós. Fazemos isso usando a função k_core do NetworkX. A função k_core filtra os nós com grau menor que um determinado número, k. Neste exemplo, defino k igual a 4, o que reduz o número de nós no gráfico para cerca de 300.
 
-#### 4.4.3 Análise de conexões
+#### 4.4.4 Análise de conexões
 
 Com esse gráfico menor, podemos facilmente fazer algumas análises de rede. Começamos dividindo o gráfico em grupos usando um algoritmo de detecção de comunidade. Dessa forma, nós precisamos executar o código de centralidade de grau novamente agora que nossa rede é menor. Now that we have the nodes split into groups and the degree of each node, we combine these into one DataFrame. Agora que temos os nós divididos em grupos e o grau de cada nó, nós os combinamos em um DataFrame. Em seguida, podemos visualizar este gráfico e salvá-lo em um arquivo png. 
 
@@ -270,7 +270,7 @@ Isso deve criar um gráfico parecido com isto:
  <p> </p>
 </div>
 
-#### 4.4.4 Visualização no Gephi
+#### 4.4.5 Visualização no Gephi
 
 Em seguida, exportaremos os arquivos para o formato csv e usaremos o Gephi para visualizar. Gephi é um software de análise e visualização de rede de código aberto. Você deve ser capaz de instalá-lo facilmente gratuitamente no site deles.
 
@@ -278,13 +278,16 @@ Para usar o Gephi, primeiro é necessário exportar a lista de nós e a lista de
 
 https://github.com/barbrina/Twitter-Data-Analysis/blob/099203bb02ed52b0a1c9601a5681c410612e07d0/Final/twitter.py#L2737-L2741
 
-#### 4.4.4 Etapa 2 - Assunto mais comentado: Raspagem de dados
+## 5. Resultados e Análises
+
+## 6. Conclusão
  
-## 5. Compilação e Execução
+## 7. Compilação e Execução
 
 </div>
 
-## 6. Referências Bibliográficas
+
+## 8. Referências Bibliográficas
 
 Mota M. **_Grafos — Conceitos Básicos_**. Internet: https://medium.com/20-21/grafos-ac48e874570
 
@@ -312,11 +315,17 @@ Aric A. Hagberg, Daniel A. Schult and Pieter J. Swart, **_Exploring network stru
 
 Parika P. **_Analysis Of Twitter Social Network_**. Internet: https://medium.com/social-media-theories-ethics-and-analytics/analysis-of-twitter-social-network-d5023e1a1aa, 2020. 
 
-## 7. Integrantes
-
-<div>
-<p align="justify"> <b> Thaissa Vitória Guimarães Daldegan de Souza </b> </p>
+## 9. Integrantes
 
 <div>
 <p align="justify"> <b> Bárbara Braga Gualberto Correa </b> </p>
+
+<div>
+<p align="justify"> <b> Gabriel Couto Assis </b> </p>
+
+<div>
+<p align="justify"> <b> Pablo Sousa da Silva </b> </p>
+
+<div>
+<p align="justify"> <b> Thaissa Vitória Guimarães Daldegan de Sousa </b> </p>
 
