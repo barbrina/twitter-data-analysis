@@ -417,12 +417,12 @@ Para compilar e executar, deve-se rodar no terminal no diretório similar ao rep
    </tr>
    <tr>
       <td>Etapa 1</td>
-      <td>python3 Final/Etapa1.py</td>
+      <td>py Final/Etapa1.py</td>
       <td>conda Final/Etapa1.py</td>
    </tr>
    <tr>
       <td>Etapa 2</td>
-      <td>python3 Final/Etapa2.py</td>
+      <td>py Final/Etapa2.py</td>
       <td>conda Final/Etapa2.py</td>
    </tr>
    
@@ -461,15 +461,11 @@ Parika P. **_Analysis Of Twitter Social Network_**. Internet: https://medium.com
 
 ## 9. Integrantes
 
-<div>
-<p align="justify"> <b> Bárbara Braga Gualberto Correa </b> </p>
+**[Bárbara Braga Gualberto Correa](https://github.com/barbrina)**
 
-<div>
-<p align="justify"> <b> Gabriel Couto Assis </b> </p>
+**[Gabriel Couto Assis](https://github.com/Couto1411)**
 
-<div>
-<p align="justify"> <b> Pablo Sousa da Silva </b> </p>
+**[Pablo Sousa da Silva](https://github.com/pablossousa)**
 
-<div>
-<p align="justify"> <b> Thaissa Vitória Guimarães Daldegan de Sousa </b> </p>
+**[Thaissa Vitória Guimarães Daldegan de Sousa](https://github.com/thaissavitoria)**
 
