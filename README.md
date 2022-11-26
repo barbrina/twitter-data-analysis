@@ -349,6 +349,8 @@ A seguir utilizamos a função visualize da classe de grafo, essa função funci
 
  https://github.com/barbrina/Twitter-Data-Analysis/blob/ddf123a492798b6a2c42deed7efaaea0e50ed2af/Final/Etapa2.py#L2595-L2599
 
+#### <b>4.4.3.4 Visualização no Gephi</b>
+Utilizando a função **write_gexf** disponível na biblioteca networkx podemos criar um arquivo .gexf após a criação do nosso grafo na função *visualize*. Abrindo esse arquivo com o gephi e utilizando o rankeamento por peso podemos observar o resultado final da rede
 
 ## 5. Resultados e Análises
 
@@ -365,28 +367,66 @@ Através do Gephi, pudemos gerar um grafo das conexões.
 Inicialmente, os dados importados ao Gephi parecem confusos. Agora, executamos uma visualização em nossos dados. Na seção “Distribuição” eu escolho “ForceAtlas″ porque é rápido e bom em mostrar relacionamentos em uma rede.
 
 
-<div id="image-table">
-    <table>
-	    <tr>
-    	    <td style="padding:10px">
-        	     <img src="img/Grafo - grupos.png" width="500"/>
-      	    </td>
-            <td style="padding:10px">
-            	 <img src="img/Grafo - grau de saída.png" width="500"/>
-            </td>
-        </tr>
-    </table>
+<div align="center">
+	<div id="image-table">
+		<table>
+			<tr>
+				<td style="padding:10px">
+					<img src="img/Grafo - grupos.png" width="500"/>
+				</td>
+				<td style="padding:10px">
+					<img src="img/Grafo - grau de saída.png" width="500"/>
+				</td>
+			</tr>
+		</table>
+	</div>
 </div>
 
 <div align="center">
 <p> Figura 10: Grafo de cores definidos por grupos e por graus de saída, respectivamente. </p>
 </div>
 
+A partir dos grafos de rede de conexões gerados na Etapa 1 podemos obter o usuário mais influente e obter um novo grafo do gephi referente aos assuntos da comunidade próxima desse usuário na Etapa 2, que irá possuir as palavras com mais conexões dizendo assim os assuntos mais importantes:
 
+<div align="center">
+    <img src="img/grafoTemas.jpg" width="500"/>
+</div>
+
+<div align="center">
+<p> Figura 11: Grafo de arestas entre as palavras mais populares. </p>
+</div>
 
 ## 6. Conclusão
+
+A partir dos grafos obtidos podemos perceber que existem diversos grupos na comunidade do usuário escolhido, alguns mais próximos que outros, podemos afirmar também que o usuário mais influente da comunidade provavelmente está entre os grupos verde e rosa, já que são os que mais possuem interconexões.
+
+Podemos observar também no grafo de assuntos uma grande realidade na comunidade que reflete na realidade. Sem dúvida alguma podemos afirmar que "bom dia" (ou "dia bom", já que o grafo não é direcional) é o assunto mais "importante" da comunidade, algo esperado, porém se observarmos mais de perto podemos ver alguns temas interligados que refletem acontecimentos na realidade, como por exemplo as ligações: copa-mundo-brasil, que reflete claramente a copa do mundo que está acontecendo no momento desta pesquisa. Vemos também uma menor ligação mas de grande relevância que é: lula-bolsonaro-brasil, que mostra o clima de eleição que ocorreu pouco tempo antes dessa investigação.
  
 ## 7. Compilação e Execução
+Para execução do arquivo é necessário primeiro instalar todas as bilbiotecas e baixar os conteúdos adicionais especificados em [4.2](#42-instalação), além disso para conseguir os grafos demonstrados em [6](#6-conclusão) se deve baixar o [Gephi](https://gephi.org/)
+
+Antes de iniciar o programa, é necessário criar um arquivo: "credencias.json" com a [configuração](#442-conexão-à-api-do-twitter), e garantir que esteja no diretório principal de sua IDE.
+
+Para compilar e executar, deve-se rodar no terminal no diretório similar ao repositório:
+
+<table>
+   <tr>
+      <td></td>
+      <td>Python3</td>
+      <td>Anaconda</td>
+   </tr>
+   <tr>
+      <td>Etapa 1</td>
+      <td>python3 Final/Etapa1.py</td>
+      <td>conda Final/Etapa1.py</td>
+   </tr>
+   <tr>
+      <td>Etapa 2</td>
+      <td>python3 Final/Etapa2.py</td>
+      <td>conda Final/Etapa2.py</td>
+   </tr>
+   
+</table>
 
 </div>
 
