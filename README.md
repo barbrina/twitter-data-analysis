@@ -2,7 +2,7 @@
 
 <img align="right" width="100" height="100" src="img/twitter_icon.png">
 
-# Analisando conexões de perfis pessoais do Twitter
+# Analisando conexões de perfis e tweets do Twitter
 
 
 <div style="display: inline-block;">
@@ -257,7 +257,7 @@ Como a rede é muito grande agora (mais de 41 mil nós), qualquer análise levar
 
 #### <b>4.4.3.2 Análise de conexões</b>
 
-Com esse gráfico menor, podemos facilmente fazer algumas análises de rede. Começamos dividindo o gráfico em grupos usando um algoritmo de detecção de comunidade. Dessa forma, nós precisamos executar o código de centralidade de grau novamente agora que nossa rede é menor. Agora que temos os nós divididos em grupos e o grau de cada nó, nós os combinamos em um DataFrame. Em seguida, podemos visualizar este gráfico e salvá-lo em um arquivo png. 
+Com esse gráfico menor, podemos facilmente fazer algumas análises de rede. Começamos dividindo o gráfico em grupos usando um <a href="https://github.com/barbrina/Twitter-Data-Analysis/wiki/Analisando-conex%C3%B5es-de-perfis-pessoais-do-Twitter">algoritmo de detecção de comunidade</a>. Dessa forma, nós precisamos executar o código de centralidade de grau novamente agora que nossa rede é menor. Agora que temos os nós divididos em grupos e o grau de cada nó, nós os combinamos em um DataFrame. Em seguida, podemos visualizar este gráfico e salvá-lo em um arquivo png. 
 
 #### <b>4.4.3.3 Visualização no Gephi</b>
 
@@ -351,6 +351,38 @@ A seguir utilizamos a função visualize da classe de grafo, essa função funci
 
 
 ## 5. Resultados e Análises
+
+Através do Gephi, pudemos gerar um grafo das conexões.
+
+ <div align="center">
+ <p> </p>
+ <img width="500" src="img/grafo.png ">
+  <p> </p>
+ <figcaption>Figura 9: Primeiro grafo plotado no Gephi. </figcaption>
+ <p> </p>
+</div>
+
+Inicialmente, os dados importados ao Gephi parecem confusos. Agora, executamos uma visualização em nossos dados. Na seção “Distribuição” eu escolho “ForceAtlas″ porque é rápido e bom em mostrar relacionamentos em uma rede.
+
+
+<div id="image-table">
+    <table>
+	    <tr>
+    	    <td style="padding:10px">
+        	     <img src="img/Grafo - grupos.png" width="500"/>
+      	    </td>
+            <td style="padding:10px">
+            	 <img src="img/Grafo - grau de saída.png" width="500"/>
+            </td>
+        </tr>
+    </table>
+</div>
+
+<div align="center">
+<p> Figura 10: Grafo de cores definidos por grupos e por graus de saída, respectivamente. </p>
+</div>
+
+
 
 ## 6. Conclusão
  
