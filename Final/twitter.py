@@ -1,7 +1,14 @@
+from community import community_louvain
+from IPython.display import display
+import matplotlib.pyplot as plt
+import networkx as nx
 import tweepy
+import pandas as pd
 import json
 import codecs
-import re
+import regex as re
+from nltk.corpus import stopwords
+from nltk.tokenize import word_tokenize
 
 def deEmojify(text):
     regrex_pattern = re.compile(pattern = "["
@@ -2556,35 +2563,190 @@ def deEmojify(text):
                            "]+", flags = re.UNICODE)
     return regrex_pattern.sub(r'',text)
 
+
+class GraphVisualization:
+   
+    def __init__(self):
+        self.nos=dict()
+        self.arestas = dict()
+          
+    def addNode(self,palavra):
+        self.nos[palavra]=self.nos.setdefault(palavra,0)+10
+    
+    def addEdge(self, a, b):
+        self.arestas[frozenset([a,b])]=self.arestas.setdefault(frozenset([a,b]),0)+1
+          
+    def visualize(self):
+        G = nx.Graph()
+        remove = {key:val for key, val in self.nos.items() if val <1000}
+        self.arestas = {key:val for key, val in self.arestas.items() if list(key)[0] not in remove and list(key)[1] not in remove}
+        print("removeu arestas pequenas")
+        self.nos = {key:val for key, val in self.nos.items() if val >=1000}
+        print("removeu nós pequenos")
+        temp=[]
+        for x in self.arestas:
+            aux=list(x)
+            temp.append((aux[0],aux[1],self.arestas[x]))
+        print("criou arestas com peso")
+        G.add_nodes_from(list(self.nos.keys()))
+        G.add_weighted_edges_from(temp)
+        pos = nx.spring_layout(G)
+        nx.draw_networkx_nodes(G, pos,nodelist=list(self.nos.keys()), node_size=list(self.nos.values()))
+        nx.draw_networkx_edges(G, pos, width=2)
+        nx.draw_networkx_labels(G, pos, font_size=10, font_family="sans-serif")
+        nx.draw_networkx_edge_labels(G, pos, nx.get_edge_attributes(G, "weight"))
+        ax = plt.gca()
+        ax.margins(0.08)
+        plt.axis("off")
+        plt.tight_layout()
+        plt.show()
+
 # Configuração API
-credenciais = open('./Couto-Pablo/credenciais.json').read()
+credenciais = open('./Barbara-Thaissa/credenciais.json').read()
 info = json.loads(credenciais)
 
-consumer_key = info['API_ACCESS_PABLO']
-consumer_secret = info['API_ACCESS_SECRET_PABLO']
-access_key = info['ACCESS_TOKEN_PABLO']
-access_secret = info['ACCESS_TOKEN_SECRET_PABLO']
+consumer_key = info['API_ACCESS_BARBARA']
+consumer_secret = info['API_ACCESS_SECRET_BARBARA']
+access_key = info['ACCESS_TOKEN_BARBARA']
+access_secret = info['ACCESS_TOKEN_SECRET_BARBARA']
 
+# Setup tweepy to authenticate with Twitter credentials:
 autorizacao = tweepy.OAuthHandler(consumer_key, consumer_secret)
 autorizacao.set_access_token(access_key, access_secret)
 
+# Agora temos nossa variável chamada api onde guardamos uma instância do tweepy e
+# com ela que iremos trabalhar a partir de agora.
 api = tweepy.API(autorizacao, wait_on_rate_limit=True)
 # Configuração API
 
-# Pega seguidores do arquivo
+me = api.get_user(screen_name="Barbrinass")
+print(me.id)
+
+user_list = [me.id]
+follower_list = []
+for user in user_list:
+    followers = []
+    try:
+        for page in tweepy.Cursor(api.get_follower_ids, user_id=user).pages():
+            followers.extend(page)
+            print(len(followers))
+    except tweepy.errors.TweepyException:
+        print("error")
+        continue
+    follower_list.append(followers)
+
+df = pd.DataFrame(columns=['source', 'target'])  # DataFrame vazio
+# Defina a lista de seguidores como a coluna de destino
+df['target'] = follower_list[0]
+df['source'] = me.id  # Define meu ID de usuário como source
+
+display(df)
+
+G = nx.from_pandas_edgelist(df, 'source', 'target')  # Transforma df em gráfico
+pos = nx.spring_layout(G)  # especifica layout 
+
+f, ax = plt.subplots(figsize=(10, 10))
+plt.style.use('ggplot')
+nodes = nx.draw_networkx_nodes(G, pos, alpha=0.8)
+nodes.set_edgecolor('k')
+
+nx.draw_networkx_labels(G, pos, font_size=8)
+nx.draw_networkx_edges(G, pos, width=1.0, alpha=0.2)
+nx.draw(G)
+plt.savefig("BarbrinassFollowers.png")
+
+
+# Use a lista de seguidores que extraímos no código acima
+user_list = list(df['target'])
+for userID in user_list:
+    print(userID)
+    followers = []
+    follower_list = []
+
+    # busca o usuário
+    user = api.get_user(user_id=userID)
+
+    # buscan a contagem de seguidores
+    followers_count = user.followers_count
+
+    try:
+        for page in tweepy.Cursor(api.get_follower_ids, user_id=userID).pages():
+            followers.extend(page)
+            print(len(followers))
+            if followers_count >= 5000:  # Pega apenas os primeiros 5.000 seguidores
+                break
+    except tweepy.errors.TweepyException:
+        print("error")
+        continue
+    follower_list.append(followers)
+    temp = pd.DataFrame(columns=['source', 'target'])
+    temp['target'] = follower_list[0]
+    temp['source'] = userID
+    df = df.append(temp)
+    df.to_csv("networkOfFollowers.csv")
+
+
+df = pd.read_csv("networkOfFollowers.csv")  # Lê em um df
+display(df)
+
+G = nx.from_pandas_edgelist(df, 'source', 'target')
+
+G.number_of_nodes()  # Encontra o número total de nós neste gráfico
+
+G_sorted = pd.DataFrame(sorted(G.degree, key=lambda x: x[1], reverse=True))
+G_sorted.columns = ['nconst', 'degree']
+G_sorted.head()
+
+G_tmp = nx.k_core(G, 4)  # Exclui nós com grau menor que 4
+
+partition = community_louvain.best_partition(
+    G_tmp)  # Transforma partição em dataframe
+partition1 = pd.DataFrame([partition]).T
+partition1 = partition1.reset_index()
+partition1.columns = ['names', 'group']
+
+display(partition1)
+
+G_sorted = pd.DataFrame(sorted(G_tmp.degree, key=lambda x: x[1], reverse=True))
+G_sorted.columns = ['names', 'degree']
+G_sorted.head()
+dc = G_sorted
+
+display(dc)
+
+combined = pd.merge(dc, partition1, how='left', left_on='names', right_on='names')
+
+display(combined)
+
+pos = nx.spring_layout(G_tmp)
+f, ax = plt.subplots(figsize=(10, 10))
+plt.style.use('ggplot')  # cc = nx.betweenness_centrality(G2)
+nodes = nx.draw_networkx_nodes(G_tmp, pos,
+                               cmap=plt.cm.Set1,
+                               node_color=combined['group'],
+                               alpha=0.8)
+nodes.set_edgecolor('k')
+nx.draw_networkx_labels(G_tmp, pos, font_size=4)
+nx.draw_networkx_edges(G_tmp, pos, width=1.0, alpha=0.2)
+plt.savefig('twitterFollowers.png')
+
+combined = combined.rename(columns={"names": "Id"})
+edges = nx.to_pandas_edgelist(G_tmp)
+nodes = combined['Id']
+edges.to_csv("edges.csv", index=False)
+combined.to_csv("nodes.csv", index=False)
+
+famosinho=pd.read_csv("./backup/nodes.csv").iloc[0][0]
+famosinho=famosinho.item()
 seguidores=[]
-with open('./backup/seguidores.txt', 'r') as filehandle:
-    for line in filehandle:
-        curr_place = line[:-1]
-        seguidores.append(int(curr_place))
-filehandle.close()
-# Pega seguidores do arquivo
-
-mensagens=[]
-
-# Pega mensagens de cada seguidor
+try:
+    for page in tweepy.Cursor(api.get_follower_ids, user_id=famosinho).pages():
+        seguidores.extend(page)
+except tweepy.errors.TweepyException:
+    print("erro seguidores")
+    
 count=1
-file = codecs.open("./backup/tweets.txt", "w", "utf-8")
+file = codecs.open("./backup/tweetsFinal.txt", "w", "utf-8")
 for user in seguidores:
     try:
         for status in tweepy.Cursor(api.user_timeline, user_id=user, tweet_mode="extended").items(20):
@@ -2595,4 +2757,34 @@ for user in seguidores:
     print(count)
     count=count+1
 file.close()
-# Pega mensagens de cada seguidor
+        
+G = GraphVisualization()
+
+with open('./backup/tweetsFinal.txt', mode='r',encoding='utf-8') as file:
+    texto= file.read()
+file.close()    
+
+texto = texto.lower() #converte todas as palavras para letras minusculas
+texto = re.sub(r'rt', '', texto) # remove todo rt
+texto = re.sub(r'@\w+', '', texto) # remove tudo que começar com @
+texto = re.sub(r'https://t.co/\w+', '', texto) # remove todos links do twitter
+texto = re.sub(r'https', '', texto) # remove todos links do twitter
+texto = re.sub(r'\n\s\n', '', texto) # remove toda linha vazia
+texto = re.sub(r'\s\s', ' ', texto) # remove todo duplo espaco
+texto = re.sub(r'[^\P{P};]+', '', texto) # remove toda pontuação exceto ;
+texto = re.sub(r'$', ' ', texto) # remove todo duplo espaco
+
+text_tokens=word_tokenize(texto)
+tokens_without_swpt=[word for word in text_tokens if not word in (stopwords.words('portuguese'))]
+tokens_without_swpten=[word for word in tokens_without_swpt if not word in (stopwords.words('english'))]
+texto=' '.join(tokens_without_swpten)
+
+data_set=texto.split("; ; ;")
+
+for tweet in range(len(data_set)):
+    for palavraChave in data_set[tweet].split():
+        G.addNode(palavraChave)
+        for palavra in data_set[tweet].replace(palavraChave,'').split():
+            G.addEdge(palavraChave, palavra)
+
+G.visualize()

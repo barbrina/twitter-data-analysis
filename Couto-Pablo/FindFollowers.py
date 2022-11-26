@@ -38,8 +38,6 @@ for userID in seguidores:
         continue
 # Acha seguidores dos seguidores do Pablo
 
-print(seguidores_total)
-
 # Salva em arquivo
 with open('./backup/seguidores.txt', 'w') as fp:
     for item in seguidores_total:

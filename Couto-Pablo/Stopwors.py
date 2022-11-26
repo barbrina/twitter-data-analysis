@@ -8,18 +8,31 @@ from nltk.tokenize import word_tokenize
 class GraphVisualization:
    
     def __init__(self):
-        self.visual = []
+        self.nos=dict()
+        self.arestas = dict()
           
-    def addEdge(self, a, b, peso=1):
-        temp = (a, b,peso)
-        self.visual.append(temp)
-        print(peso)
+    def addNode(self,palavra):
+        self.nos[palavra]=self.nos.setdefault(palavra,0)+10
+    
+    def addEdge(self, a, b):
+        self.arestas[frozenset([a,b])]=self.arestas.setdefault(frozenset([a,b]),0)+1
           
     def visualize(self):
         G = nx.Graph()
-        G.add_weighted_edges_from(self.visual)
-        pos = nx.spring_layout(G, seed=7)
-        nx.draw_networkx_nodes(G, pos, node_size=400)
+        remove = {key:val for key, val in self.nos.items() if val <2000}
+        self.arestas = {key:val for key, val in self.arestas.items() if list(key)[0] not in remove and list(key)[1] not in remove}
+        print("removeu arestas pequenas")
+        self.nos = {key:val for key, val in self.nos.items() if val >=2000}
+        print("removeu nós pequenos")
+        temp=[]
+        for x in self.arestas:
+            aux=list(x)
+            temp.append((aux[0],aux[1],self.arestas[x]))
+        print("criou arestas com peso")
+        G.add_nodes_from(list(self.nos.keys()))
+        G.add_weighted_edges_from(temp)
+        pos = nx.spring_layout(G)
+        nx.draw_networkx_nodes(G, pos,nodelist=list(self.nos.keys()), node_size=list(self.nos.values()))
         nx.draw_networkx_edges(G, pos, width=2)
         nx.draw_networkx_labels(G, pos, font_size=10, font_family="sans-serif")
         nx.draw_networkx_edge_labels(G, pos, nx.get_edge_attributes(G, "weight"))
@@ -32,7 +45,7 @@ class GraphVisualization:
         
 G = GraphVisualization()
 
-with open('../backup/backupTweetTeste.txt', mode='r',encoding='utf-8') as file:
+with open('./backup/tweets.txt', mode='r',encoding='utf-8') as file:
     texto= file.read()
 file.close()    
 
@@ -44,37 +57,27 @@ texto = re.sub(r'https', '', texto) # remove todos links do twitter
 texto = re.sub(r'\n\s\n', '', texto) # remove toda linha vazia
 texto = re.sub(r'\s\s', ' ', texto) # remove todo duplo espaco
 texto = re.sub(r'[^\P{P};]+', '', texto) # remove toda pontuação exceto ;
+texto = re.sub(r'$', ' ', texto) # remove todo duplo espaco
+
+print("removeu simbolos")
 
 text_tokens=word_tokenize(texto)
 tokens_without_swpt=[word for word in text_tokens if not word in (stopwords.words('portuguese'))]
 tokens_without_swpten=[word for word in tokens_without_swpt if not word in (stopwords.words('english'))]
 texto=' '.join(tokens_without_swpten)
 
-nos=set()
-arestas=[]
+print("removeu stopwords")
 
 data_set=texto.split("; ; ;")
-print(data_set)
 
 for tweet in range(len(data_set)):
     for palavraChave in data_set[tweet].split():
-        nos.add(palavraChave)
+        G.addNode(palavraChave)
         for palavra in data_set[tweet].replace(palavraChave,'').split():
-            arestas.append({palavraChave, palavra})
-            
-print(arestas)
-print(nos)
+            G.addEdge(palavraChave, palavra)
 
-# for tweet in range(len(data_set)):
-#     for palavra in data_set[tweet].split():
-#         dicionario.setdefault(palavra,set(data_set[tweet].replace(palavra,'').split())).update(data_set[tweet].replace(palavra,'').split())
+print("adicionou nós e arestas")
 
-# for x in dicionario:
-#     print (x,"[")
-#     for y in dicionario[x]:
-#         print(y, end=" ")
-    
-#     print ("]")
-
+G.visualize()
 
     
