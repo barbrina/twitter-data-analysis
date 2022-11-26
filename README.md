@@ -277,6 +277,8 @@ Em seguida, exportaremos os arquivos para o formato csv e usaremos o Gephi para 
 Para usar o Gephi, primeiro é necessário exportar a lista de nós e a lista de arestas como arquivos csv.
 
 https://github.com/barbrina/Twitter-Data-Analysis/blob/099203bb02ed52b0a1c9601a5681c410612e07d0/Final/twitter.py#L2737-L2741
+
+#### 4.4.4 Etapa 2 - Assunto mais comentado: Raspagem de dados
  
 ## 5. Compilação e Execução
 

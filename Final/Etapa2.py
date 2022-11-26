@@ -1,5 +1,3 @@
-from community import community_louvain
-from IPython.display import display
 import matplotlib.pyplot as plt
 import networkx as nx
 import tweepy
@@ -2563,7 +2561,6 @@ def deEmojify(text):
                            "]+", flags = re.UNICODE)
     return regrex_pattern.sub(r'',text)
 
-
 class GraphVisualization:
    
     def __init__(self):
@@ -2601,8 +2598,7 @@ class GraphVisualization:
         plt.tight_layout()
         plt.show()
 
-# Aqui utilizamos a funcaoo open para abrir nosso arquivo e a
-# biblioteca json para carregar nosso arquivo para uma variavel chamada info.
+# Configuração API
 credenciais = open('credenciais.json').read()
 info = json.loads(credenciais)
 
@@ -2611,144 +2607,25 @@ consumer_secret = info['API_ACCESS_SECRET']
 access_key = info['ACCESS_TOKEN']
 access_secret = info['ACCESS_TOKEN_SECRET']
 
-# Configure tweepy para autenticar com as credenciais do Twitter:
 autorizacao = tweepy.OAuthHandler(consumer_key, consumer_secret)
 autorizacao.set_access_token(access_key, access_secret)
 
-# Agora temos nossa variável chamada api onde guardamos uma instância do tweepy e
-# com ela que iremos trabalhar a partir de agora.
 api = tweepy.API(autorizacao, wait_on_rate_limit=True)
+# Configuração API
 
-me = api.get_user(screen_name="Barbrinass")
-print(me.id)
-
-user_list = [me.id]
-follower_list = []
-for user in user_list:
-    followers = []
-    try:
-        for page in tweepy.Cursor(api.get_follower_ids, user_id=user).pages():
-            followers.extend(page)
-            print(len(followers))
-    except tweepy.errors.TweepyException:
-        print("error")
-        continue
-    follower_list.append(followers)
-
-df = pd.DataFrame(columns=['source', 'target'])  # DataFrame vazio
-# Defina a lista de seguidores como a coluna de destino
-df['target'] = follower_list[0]
-df['source'] = me.id  # Define meu ID de usu�rio como source
-
-display(df)
-
-G = nx.from_pandas_edgelist(df, 'source', 'target')  # Transforma df em gr�fico
-pos = nx.spring_layout(G)  # especifica layout
-
-f, ax = plt.subplots(figsize=(10, 10))
-plt.style.use('ggplot')
-nodes = nx.draw_networkx_nodes(G, pos, alpha=0.8)
-nodes.set_edgecolor('k')
-
-nx.draw_networkx_labels(G, pos, font_size=8)
-nx.draw_networkx_edges(G, pos, width=1.0, alpha=0.2)
-nx.draw(G)
-plt.savefig("./backup/BarbrinassFollowers.png")
-
-
-# Use a lista de seguidores que extra�mos no c�digo acima
-user_list = list(df['target'])
-for userID in user_list:
-    print(userID)
-    followers = []
-    follower_list = []
-
-    # busca o usu�rio
-    user = api.get_user(user_id=userID)
-
-    # buscan a contagem de seguidores
-    followers_count = user.followers_count
-
-    try:
-        for page in tweepy.Cursor(api.get_follower_ids, user_id=userID).pages():
-            followers.extend(page)
-            print(len(followers))
-            if followers_count >= 5000:  # Pega apenas os primeiros 5.000 seguidores
-                break
-    except tweepy.errors.TweepyException:
-        print("error")
-        continue
-    follower_list.append(followers)
-    temp = pd.DataFrame(columns=['source', 'target'])
-    temp['target'] = follower_list[0]
-    temp['source'] = userID
-    df = df.append(temp)
-    df.to_csv("./backup/networkOfFollowers.csv")
-
-
-df = pd.read_csv("./backup/networkOfFollowers.csv")  # L� em um df
-display(df)
-
-G = nx.from_pandas_edgelist(df, 'source', 'target')
-
-G.number_of_nodes()  # Encontra o n�mero total de n�s neste gr�fico
-
-G_sorted = pd.DataFrame(sorted(G.degree, key=lambda x: x[1], reverse=True))
-G_sorted.columns = ['nconst', 'degree']
-G_sorted.head()
-
-u = api.get_user(user_id=1034409277551796224)
-u.screen_name
-
-G_tmp = nx.k_core(G, 4)  # Exclui n�s com grau menor que 4
-
-partition = community_louvain.best_partition(
-    G_tmp)  # Transforma parti��o em dataframe
-partition1 = pd.DataFrame([partition]).T
-partition1 = partition1.reset_index()
-partition1.columns = ['names', 'group']
-
-display(partition1)
-
-G_sorted = pd.DataFrame(sorted(G_tmp.degree, key=lambda x: x[1], reverse=True))
-G_sorted.columns = ['names', 'degree']
-G_sorted.head()
-dc = G_sorted
-
-display(dc)
-
-combined = pd.merge(dc, partition1, how='left',
-                    left_on='names', right_on='names')
-
-display(combined)
-
-pos = nx.spring_layout(G_tmp)
-f, ax = plt.subplots(figsize=(10, 10))
-plt.style.use('ggplot')  # cc = nx.betweenness_centrality(G2)
-nodes = nx.draw_networkx_nodes(G_tmp, pos,
-                               cmap=plt.cm.Set1,
-                               node_color=combined['group'],
-                               alpha=0.8)
-nodes.set_edgecolor('k')
-nx.draw_networkx_labels(G_tmp, pos, font_size=4)
-nx.draw_networkx_edges(G_tmp, pos, width=1.0, alpha=0.2)
-plt.savefig('./backup/twitterFollowers.png')
-
-combined = combined.rename(columns={"names": "Id"})
-edges = nx.to_pandas_edgelist(G_tmp)
-nodes = combined['Id']
-edges.to_csv("./backup/edges.csv", index=False)
-combined.to_csv("./backup/nodes.csv", index=False)
-
+#Pega o usuário mais influente obtido na Etapa1
 famosinho=pd.read_csv("./backup/nodes.csv").iloc[0][0]
-famosinho=famosinho.item()
+
+# Obtem os seguidores do usuário mais influente da rede
 seguidores=[]
 try:
     for page in tweepy.Cursor(api.get_follower_ids, user_id=famosinho).pages():
         seguidores.extend(page)
 except tweepy.errors.TweepyException:
     print("erro seguidores")
+# Obtem os seguidores do usuário mais influente da rede
     
+# Obtem os 20 tweets mais recentes dos seguidores obtidos
 count=1
 file = codecs.open("./backup/tweetsFinal.txt", "w", "utf-8")
 for user in seguidores:
@@ -2761,6 +2638,7 @@ for user in seguidores:
     print(count)
     count=count+1
 file.close()
+# Obtem os 20 tweets mais recentes dos seguidores obtidos
         
 G = GraphVisualization()
 
@@ -2768,27 +2646,31 @@ with open('./backup/tweetsFinal.txt', mode='r',encoding='utf-8') as file:
     texto= file.read()
 file.close()    
 
-texto = texto.lower() #converte todas as palavras para letras minusculas
-texto = re.sub(r'rt', '', texto) # remove todo rt
-texto = re.sub(r'@\w+', '', texto) # remove tudo que começar com @
-texto = re.sub(r'https://t.co/\w+', '', texto) # remove todos links do twitter
-texto = re.sub(r'https', '', texto) # remove todos links do twitter
-texto = re.sub(r'\n\s\n', '', texto) # remove toda linha vazia
-texto = re.sub(r'\s\s', ' ', texto) # remove todo duplo espaco
-texto = re.sub(r'[^\P{P};]+', '', texto) # remove toda pontuação exceto ;
-texto = re.sub(r'$', ' ', texto) # remove todo duplo espaco
+# Trata os tweets
+texto = texto.lower()                               #converte todas as palavras para letras minusculas
+texto = re.sub(r'rt', '', texto)                    # remove todo rt
+texto = re.sub(r'@\w+', '', texto)                  # remove tudo que começar com @
+texto = re.sub(r'https://t.co/\w+', '', texto)      # remove todos links do twitter
+texto = re.sub(r'https', '', texto)                 # remove todos links do twitter
+texto = re.sub(r'\n\s\n', '', texto)                # remove toda linha vazia
+texto = re.sub(r'\s\s', ' ', texto)                 # remove todo duplo espaco
+texto = re.sub(r'[^\P{P};]+', '', texto)            # remove toda pontuação exceto ;
+texto = re.sub(r'$', ' ', texto)                    # remove todo duplo espaco
 
 text_tokens=word_tokenize(texto)
 tokens_without_swpt=[word for word in text_tokens if not word in (stopwords.words('portuguese'))]
 tokens_without_swpten=[word for word in tokens_without_swpt if not word in (stopwords.words('english'))]
 texto=' '.join(tokens_without_swpten)
+# Trata os tweets
 
 data_set=texto.split("; ; ;")
 
+# Insere nós e arestas na classe do grafo
 for tweet in range(len(data_set)):
     for palavraChave in data_set[tweet].split():
         G.addNode(palavraChave)
         for palavra in data_set[tweet].replace(palavraChave,'').split():
             G.addEdge(palavraChave, palavra)
+# Insere nós e arestas na classe do grafo
 
 G.visualize()
