@@ -130,7 +130,7 @@ Desta forma, o seguinte trabalho consiste em:
 3) Usar o NetworkX para extrair uma rede desses dados e executar algumas análises básicas de rede;
 4) Visualizar a rede no Gephi.
 5) A partir do usuário com maior numero de conexões, extrair os 20 tweets mais recentes de cada um de seus seguidores;
-6) Tratar estes tweets utilizando regex, codecs e nltk, para respectivamente, excluir dados estranhos(pontuação, espaço duplo, linha vazia, emojis, links, etc), salvar com codificação utf-8(manter acentos) e remover stopwords;
+6) Tratar estes tweets utilizando regex, codecs e nltk;
 7) Utilizando os tweets tratados, criamos nós com palavras únicas, e ligamos essas palavras através de arestas com as outras palavras do tweet;
 8) A cada repetição de palavra e aresta adicionamos um valor ao item referente a estes, e no final plotamos o grafo usando o matplotlib.
 
@@ -151,7 +151,7 @@ pip3 install ipython
 
 ### 4.3 Bibliotecas utilizadas
 
-https://github.com/barbrina/AEDs-II/blob/ec4f340603c80c50ced61438448984aa963f7396/Analisando%20conex%C3%B5es%20do%20Twitter/src/twitter.py#L1-L7
+https://github.com/barbrina/Twitter-Data-Analysis/blob/3d3c2c75059f674bd538b3898f0aec618baeea45/Final/twitter.py#L1-L11
 
 As ferramentas utilizadas foram:
 
@@ -161,10 +161,13 @@ As ferramentas utilizadas foram:
 - Matplotlib — biblioteca de plotagem
 - JSON — tipo de arquivo
 - Gephi — um pacote de software de análise e visualização de rede de código aberto
+- Regex — excluir dados estranhos(pontuação, espaço duplo, linha vazia, emojis, links, etc)
+- Codecs — salvar com codificação utf-8(manter acentos)
+- Nltk — remover stopwords
 
 ### 4.4 Estrutura do algoritmo
 
-Irei explicar as etapas que segui para extrair dados do Twitter. Em primeiro lugar, você deve obter as credenciais da API do Twitter no site do desenvolvedor do Twitter, que são a chave da API, a chave secreta da API, o token de acesso e o segredo do token de acesso.
+Para extrair dados do Twitter devem ser seguidas as seguintes etapas. Em primeiro lugar, você deve obter as credenciais da API do Twitter no site do desenvolvedor do Twitter, que são a chave da API, a chave secreta da API, o token de acesso e o segredo do token de acesso.
 
 #### 4.4.1 Criação de um aplicativo do Twitter e configurção das credenciais
 
@@ -180,7 +183,7 @@ Para poder reproduzir as etapas a seguir é necessário ter uma conta no Twitter
 
 #### 4.4.2 Conexão à API do Twitter
 
-Para começar, vamos construir uma rede usando minha conta pessoal no Twitter (@ barbrinass). Para fazer isso, vamos começar com uma lista de todos os meus seguidores (atualmente 69 seguidores). Em seguida, obteremos todos os seguidores dessas 69 contas. Para economizar tempo, para contas com mais de 5.000 seguidores, irei raspar apenas os primeiros 5.000 de seus seguidores.
+Para começar, é necessário construir uma rede usando a conta pessoal do twitter. Para fazer isso, utiliza-se uma lista de todos os seguidores. Em seguida, obtêm-se todos os seguidores dos usuarios dessa lista. Para economizar tempo, para contas com mais de 5.000 seguidores, extrai-se apenas os primeiros 5.000 de seus seguidores.
 
 Primeiro, precisamos importar os pacotes Tweepy e pandas.
 
