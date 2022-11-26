@@ -153,7 +153,7 @@ pip3 install ipython
 
 ### 4.3 Bibliotecas utilizadas
 
-https://github.com/barbrina/Twitter-Data-Analysis/blob/3d3c2c75059f674bd538b3898f0aec618baeea45/Final/twitter.py#L1-L11
+https://github.com/barbrina/Twitter-Data-Analysis/blob/85e61f9f72a316351deb559c4158657fecbd8a2e/Final/Etapa1.py#L1-L7
 
 As ferramentas utilizadas foram:
 
@@ -189,7 +189,7 @@ Para começar, é necessário construir uma rede usando a conta pessoal do twitt
 
 Primeiro, precisamos importar os pacotes Tweepy e pandas.
 
-https://github.com/barbrina/Twitter-Data-Analysis/blob/3d3c2c75059f674bd538b3898f0aec618baeea45/Final/twitter.py#L5-L6
+https://github.com/barbrina/Twitter-Data-Analysis/blob/85e61f9f72a316351deb559c4158657fecbd8a2e/Final/Etapa1.py#L5-L6
 
 Em seguida, precisamos inserir a credenciais da API do Twitter retiradas na sessão **Criação de um aplicativo do Twitter e configurção das credenciais**.
 
@@ -202,13 +202,13 @@ access_secret = info['ACCESS_TOKEN_SECRET']
 
 Com o Tweepy, podemos usar essas credenciais para nos conectar à API do Twitter e começar a baixar os dados. O código a seguir usa apenas as credenciais inseridas acima para se conectar à API. Como vamos fazer o download de grandes conjuntos de dados, é importante especificar alguns parâmetros quando inicializarmos a API. Definimos ‘wait_on_rate_limit’ como True. Existem limites de taxa ao baixar dados do Twitter - você só pode fazer um número limitado de solicitações de download para a API em um determinado período de tempo. Ao definir esses parâmetros como True, não interromperemos a conexão com a API quando atingirmos esses limites. Em vez disso, esperaremos até que o tempo limite termine e possamos continuar baixando os dados.
 
-https://github.com/barbrina/Twitter-Data-Analysis/blob/099203bb02ed52b0a1c9601a5681c410612e07d0/Final/twitter.py#L2614-L2620
+https://github.com/barbrina/Twitter-Data-Analysis/blob/85e61f9f72a316351deb559c4158657fecbd8a2e/Final/Etapa1.py#L19-L25
 
 #### 4.4.3 Etapa 1: Usuário mais importante: Raspagem de dados
 
 Para iniciar o download dos dados, obteremos todos os seguidores de um usuário individual. Para obter isso, você precisa do ID do usuário. Você pode obter o ID de usuário de um usuário se souber seu nome de tela usando o código abaixo.
 
-https://github.com/barbrina/Twitter-Data-Analysis/blob/099203bb02ed52b0a1c9601a5681c410612e07d0/Final/twitter.py#L2622-L2623
+https://github.com/barbrina/Twitter-Data-Analysis/blob/85e61f9f72a316351deb559c4158657fecbd8a2e/Final/Etapa1.py#L27-L28
 
 Meu ID de usuário é: 1551694598518480898
 
@@ -216,11 +216,11 @@ Uma rede consiste de nós (ou vértices) e links (ou arestas). Para esta rede, u
 
 O código a seguir cria uma lista dos meus 69 seguidores. Agora que temos uma lista de todos os seguidores, podemos colocá-los em um DataFrame.
 
-https://github.com/barbrina/Twitter-Data-Analysis/blob/099203bb02ed52b0a1c9601a5681c410612e07d0/Final/twitter.py#L2625-L2641
+https://github.com/barbrina/Twitter-Data-Analysis/blob/85e61f9f72a316351deb559c4158657fecbd8a2e/Final/Etapa1.py#L30-L46
 
 Mas esta não é uma rede muito interessante e pouco pode se analisar ela. Para visualizar essa rede simples, podemos usar o pacote NetworkX para converter o DataFrame em um gráfico ou rede. Em seguida, plotamos o gráfico usando matplotlib e o armazenamos em um arquivo.
 
-https://github.com/barbrina/Twitter-Data-Analysis/blob/099203bb02ed52b0a1c9601a5681c410612e07d0/Final/twitter.py#L2645-L2656
+https://github.com/barbrina/Twitter-Data-Analysis/blob/85e61f9f72a316351deb559c4158657fecbd8a2e/Final/Etapa1.py#L50-L61
 
 O código acima renderiza o seguinte visual:
 
@@ -234,7 +234,7 @@ O código acima renderiza o seguinte visual:
 
 O que queremos mesmo é conseguir todos os seguidores desses 69 usuários. Para fazer isso, percorreremos a lista de todos os usuários, obteremos seus seguidores e adicionaremos esses links ao DataFrame original. Este é o código que levará muito tempo para ser executado por causa dos limites de taxa da API do twitter.
 
-https://github.com/barbrina/Twitter-Data-Analysis/blob/099203bb02ed52b0a1c9601a5681c410612e07d0/Final/twitter.py#L2660-L2686
+https://github.com/barbrina/Twitter-Data-Analysis/blob/85e61f9f72a316351deb559c4158657fecbd8a2e/Final/Etapa1.py#L65-L91
 
 Esse código é muito semelhante ao código acima, pois obtém todos os seguidores de um determinado ID de usuário. A grande diferença é que ao invés de alimentar apenas uma conta, estamos passando por todas as 69 contas que me seguem. Outra diferença é que se uma conta tiver mais de 5.000 seguidores, pegamos apenas os primeiros 5.000 seguidores. Isso ocorre devido à maneira como a API funciona. Cada solicitação de API retornará apenas 5.000 contas. Portanto, se quisermos todos os seguidores de uma conta que tenha, digamos, um milhão de seguidores, precisaríamos fazer 200 solicitações individuais.
 
@@ -246,11 +246,11 @@ Agora precisamos ler o csv e transformar o df em um gráfico usando o NetworkX. 
 
 Existem **NÚMERO DE CONEXÕES** nós na minha rede. Também podemos encontrar os nós mais influentes na rede usando medidas de centralidade. A medida mais simples de centralidade é o grau de centralidade, que é apenas uma função do número de conexões que cada nó possui. O código a seguir encontra o número de conexões que cada nó possui, ou seja, o grau de cada nó e os classifica em ordem decrescente.
 
-https://github.com/barbrina/Twitter-Data-Analysis/blob/099203bb02ed52b0a1c9601a5681c410612e07d0/Final/twitter.py#L2689-L2698
+https://github.com/barbrina/Twitter-Data-Analysis/blob/85e61f9f72a316351deb559c4158657fecbd8a2e/Final/Etapa1.py#L94-L103
 
 O nó da minha rede com o grau mais alto é o nó **NÚMERO** ou **NOME DE USUÁRIO**. **NOME DE USUÁRIO** tem um grau de **NÚMERO**. **NÚMERO** dessas conexões são os **NÚMERO** seguidores deste nó que raspamos. Para obtermos o nome de usuário de uma conta, dado o ID do usuário, use o seguinte código, semelhante a como obtivemos nosso ID de usuário acima.
 
-**https://github.com/barbrina/Twitter-Data-Analysis/blob/099203bb02ed52b0a1c9601a5681c410612e07d0/Final/twitter.py#L2700-L2701**
+**https://github.com/barbrina/Twitter-Data-Analysis/blob/85e61f9f72a316351deb559c4158657fecbd8a2e/Final/Etapa1.py#L105-L106**
 
 Como a rede é muito grande agora (mais de **NÚMERO** mil nós), qualquer análise levará muito tempo para ser executada e qualquer visualização será uma bagunça completa. No restante deste tutorial, filtraremos a rede para um número mais gerenciável de nós. Fazemos isso usando a função k_core do NetworkX. A função k_core filtra os nós com grau menor que um determinado número, k. Neste exemplo, defino k igual a 4, o que reduz o número de nós no gráfico para cerca de 300.
 
@@ -258,7 +258,7 @@ Como a rede é muito grande agora (mais de **NÚMERO** mil nós), qualquer anál
 
 Com esse gráfico menor, podemos facilmente fazer algumas análises de rede. Começamos dividindo o gráfico em grupos usando um algoritmo de detecção de comunidade. Dessa forma, nós precisamos executar o código de centralidade de grau novamente agora que nossa rede é menor. Now that we have the nodes split into groups and the degree of each node, we combine these into one DataFrame. Agora que temos os nós divididos em grupos e o grau de cada nó, nós os combinamos em um DataFrame. Em seguida, podemos visualizar este gráfico e salvá-lo em um arquivo png. 
 
-https://github.com/barbrina/Twitter-Data-Analysis/blob/099203bb02ed52b0a1c9601a5681c410612e07d0/Final/twitter.py#L2705-L2735
+https://github.com/barbrina/Twitter-Data-Analysis/blob/85e61f9f72a316351deb559c4158657fecbd8a2e/Final/Etapa1.py#L110-L136
 
 Isso deve criar um gráfico parecido com isto:
 
@@ -276,7 +276,7 @@ Em seguida, exportaremos os arquivos para o formato csv e usaremos o Gephi para 
 
 Para usar o Gephi, primeiro é necessário exportar a lista de nós e a lista de arestas como arquivos csv.
 
-https://github.com/barbrina/Twitter-Data-Analysis/blob/099203bb02ed52b0a1c9601a5681c410612e07d0/Final/twitter.py#L2737-L2741
+https://github.com/barbrina/Twitter-Data-Analysis/blob/85e61f9f72a316351deb559c4158657fecbd8a2e/Final/Etapa1.py#L138-L142
 
 ## 5. Resultados e Análises
 
