@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 from community import community_louvain
 from IPython.display import display
-import scipy as sp
 import matplotlib.pyplot as plt
 import networkx as nx
 import tweepy
@@ -45,11 +44,11 @@ for user in user_list:
 df = pd.DataFrame(columns=['source', 'target'])  # DataFrame vazio
 # Defina a lista de seguidores como a coluna de destino
 df['target'] = follower_list[0]
-df['source'] = me.id  # Define meu ID de usuário como source
+df['source'] = me.id  # Define meu ID de usuï¿½rio como source
 
 display(df)
 
-G = nx.from_pandas_edgelist(df, 'source', 'target')  # Transforma df em gráfico
+G = nx.from_pandas_edgelist(df, 'source', 'target')  # Transforma df em grï¿½fico
 pos = nx.spring_layout(G)  # especifica layout
 
 f, ax = plt.subplots(figsize=(10, 10))
@@ -63,14 +62,14 @@ nx.draw(G)
 plt.savefig("BarbrinassFollowers.png")
 
 
-# Use a lista de seguidores que extraímos no código acima
+# Use a lista de seguidores que extraï¿½mos no cï¿½digo acima
 user_list = list(df['target'])
 for userID in user_list:
     print(userID)
     followers = []
     follower_list = []
 
-    # busca o usuário
+    # busca o usuï¿½rio
     user = api.get_user(user_id=userID)
 
     # buscan a contagem de seguidores
@@ -93,12 +92,12 @@ for userID in user_list:
     df.to_csv("networkOfFollowers.csv")
 
 
-df = pd.read_csv("networkOfFollowers.csv")  # Lê em um df
+df = pd.read_csv("networkOfFollowers.csv")  # Lï¿½ em um df
 display(df)
 
 G = nx.from_pandas_edgelist(df, 'source', 'target')
 
-G.number_of_nodes()  # Encontra o número total de nós neste gráfico
+G.number_of_nodes()  # Encontra o nï¿½mero total de nï¿½s neste grï¿½fico
 
 G_sorted = pd.DataFrame(sorted(G.degree, key=lambda x: x[1], reverse=True))
 G_sorted.columns = ['nconst', 'degree']
@@ -107,10 +106,10 @@ G_sorted.head()
 u = api.get_user(user_id=1034409277551796224)
 u.screen_name
 
-G_tmp = nx.k_core(G, 4)  # Exclui nós com grau menor que 4
+G_tmp = nx.k_core(G, 4)  # Exclui nï¿½s com grau menor que 4
 
 partition = community_louvain.best_partition(
-    G_tmp)  # Transforma partição em dataframe
+    G_tmp)  # Transforma partiï¿½ï¿½o em dataframe
 partition1 = pd.DataFrame([partition]).T
 partition1 = partition1.reset_index()
 partition1.columns = ['names', 'group']
