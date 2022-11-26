@@ -125,14 +125,16 @@ Neste trabalho o objetivo é aplicar as estruturas em grafos para solucionar um 
 
 Desta forma, o seguinte trabalho consiste em:
 
-1) Usar o Tweepy para raspar o Twitter para todos os meus seguidores e (a maioria) de seus seguidores;
-2) Criar um DataFrame pandas de todas essas conexões;
-3) Usar o NetworkX para extrair uma rede desses dados e executar algumas análises básicas de rede;
-4) Visualizar a rede no Gephi.
-5) A partir do usuário com maior numero de conexões, extrair os 20 tweets mais recentes de cada um de seus seguidores;
-6) Tratar estes tweets utilizando regex, codecs e nltk;
-7) Utilizando os tweets tratados, criamos nós com palavras únicas, e ligamos essas palavras através de arestas com as outras palavras do tweet;
-8) A cada repetição de palavra e aresta adicionamos um valor ao item referente a estes, e no final plotamos o grafo usando o matplotlib.
+1) Usuário com mais conexões em uma rede local:    
+	1) Usar o Tweepy para raspar o Twitter para todos os meus seguidores e (a maioria) de seus seguidores;     
+	2) Criar um DataFrame pandas de todas essas conexões;     
+	3) Usar o NetworkX para extrair uma rede desses dados e executar algumas análises básicas de rede;     
+	4) Visualizar a rede no Gephi.    
+2) Assuntos mais comentados em uma rede local:     
+	1) A partir do usuário com maior numero de conexões, extrair os 20 tweets mais recentes de cada um de seus seguidores;     
+	2) Tratar estes tweets utilizando regex, codecs e nltk;     
+	3) Utilizando os tweets tratados, criamos nós com palavras únicas, e ligamos essas palavras através de arestas com as outras palavras do tweet;     
+	4) A cada repetição de palavra e aresta adicionamos um valor ao item referente a estes, e no final plotamos o grafo usando o matplotlib.    
 
 ### 4.2 Instalação
 
@@ -202,7 +204,7 @@ Com o Tweepy, podemos usar essas credenciais para nos conectar à API do Twitter
 
 https://github.com/barbrina/AEDs-II/blob/7d3954f73d13c52d913bbdebae227a7f303ae8b2/Analisando%20conex%C3%B5es%20do%20Twitter/src/twitter.py#L19-L25
 
-#### 4.4.3 Raspagem de dados
+#### 4.4.3 Etapa 1: Usuário mais importante: Raspagem de dados
 
 Para iniciar o download dos dados, obteremos todos os seguidores de um usuário individual. Para obter isso, você precisa do ID do usuário. Você pode obter o ID de usuário de um usuário se souber seu nome de tela usando o código abaixo.
 
