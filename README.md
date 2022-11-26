@@ -129,6 +129,10 @@ Desta forma, o seguinte trabalho consiste em:
 2) Criar um DataFrame pandas de todas essas conexões;
 3) Usar o NetworkX para extrair uma rede desses dados e executar algumas análises básicas de rede;
 4) Visualizar a rede no Gephi.
+5) A partir do usuário com maior numero de conexões, extrair os 20 tweets mais recentes de cada um de seus seguidores;
+6) Tratar estes tweets utilizando regex, codecs e nltk, para respectivamente, excluir dados estranhos(pontuação, espaço duplo, linha vazia, emojis, links, etc), salvar com codificação utf-8(manter acentos) e remover stopwords;
+7) Utilizando os tweets tratados, criamos nós com palavras únicas, e ligamos essas palavras através de arestas com as outras palavras do tweet;
+8) A cada repetição de palavra e aresta adicionamos um valor ao item referente a estes, e no final plotamos o grafo usando o matplotlib.
 
 ### 4.2 Instalação
 
@@ -136,6 +140,9 @@ Para rodar este código, é necessário instalar as bibliotecas a seguir.
 
 ```
 pip3 install networkx
+pip3 install codecs
+pip3 install nltk
+nltk.download('stopwords')
 pip3 install tweepy
 pip3 install community
 pip3 install python-louvain
