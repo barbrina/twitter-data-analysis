@@ -352,6 +352,38 @@ A seguir utilizamos a função visualize da classe de grafo, essa função funci
 
 ## 5. Resultados e Análises
 
+Através do Gephi, pudemos gerar um grafo das conexões.
+
+ <div align="center">
+ <p> </p>
+ <img width="500" src="img/grafo.png ">
+  <p> </p>
+ <figcaption>Figura 9: Primeiro grafo plotado no Gephi. </figcaption>
+ <p> </p>
+</div>
+
+Inicialmente, os dados importados ao Gephi parecem confusos. Agora, executamos uma visualização em nossos dados. Na seção “Distribuição” eu escolho “ForceAtlas″ porque é rápido e bom em mostrar relacionamentos em uma rede.
+
+
+<div id="image-table">
+    <table>
+	    <tr>
+    	    <td style="padding:10px">
+        	     <img src="img/Grafo - grupos.png" width="500"/>
+      	    </td>
+            <td style="padding:10px">
+            	 <img src="img/Grafo - grau de saída.png" width="500"/>
+            </td>
+        </tr>
+    </table>
+</div>
+
+<div align="center">
+<p> Figura 10: Grafo de cores definidos por grupos e por graus de saída, respectivamente. </p>
+</div>
+
+
+
 ## 6. Conclusão
  
 ## 7. Compilação e Execução
