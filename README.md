@@ -13,7 +13,7 @@
 </a> 
 </div>
 
-# 1. Grafos
+## 1. Grafos
 
 A ideia básica de grafos surgiu com o matemático Leonhard Euler no século XVIII (1735). Ele usou grafos para resolver o famoso problema das 7 pontes de Konigsberg.
 
@@ -41,7 +41,7 @@ A solução de Euler foi primeiro remover tudo que fosse irrelevante ao problema
 
 Por que é necessário saber teoria dos grafos? Para responder esta pergunta, utilizaremos um exemplo de aplicação muito comum atualmente: suponha que um ponto representa uma pessoa, e que linhas entre esses pontos representam relações, juntando pares de pessoas que você segue. Então no final, para cada pessoa que você seguir, vai ter uma ligação. Se for analisado o perfil de uma das pessoas que você segue, ela tem um conjunto de pessoas que também segue outros. Algo que poderia ser usado com esse grafo, é recomendar seguidores. Essa lógica é usada para a maioria das redes sociais.
 
-## 1.1 Networkx
+### 1.1 Networkx
 
 NetworkX é uma biblioteca Python para estudar grafos e redes. Esta é uma demonstração de código para mostrar como usamos o NetworkX para conduzir a comparação de subgráficos e manipulamos os parâmetros para desenhar os grafos.
 
@@ -54,7 +54,7 @@ Grafos em networkX podem ser criados de algumas maneiras diferentes:
 - Podemos criar um grafo vazio e adicionar os vértices e arestas um a um ou a partir de uma lista.
 - Finalmente, alguns gráficos especiais (gráficos completos, gráficos bipartidos completos, …) podem ser criados usando funções especiais.
 
-# 2. Twitter
+## 2. Twitter
 
 > Twitter é uma plataforma para as pessoas conversarem sobre assuntos do momento, um lugar que cria uma audiência muito engajada, que fica ao nosso alcance — seja por meios orgânicos ou anúncios pagos.
 
@@ -62,7 +62,7 @@ Grafos em networkX podem ser criados de algumas maneiras diferentes:
 
 Trata-se de uma rede social bastante difundida, onde seu usuário poder realizar publicações, chamados de tweets que podem conter, textos, imagens, vídeos, hiperlinks ou todos deles integrados. Essas publicações podem ser visualizadas por diversos usuários e que eventualmente poderão republicar aquela "mensagem" em uma operação conhecida como retweet.
 
-## 2.1 API
+### 2.1 API
 
 Para consumir dados do Twitter, não é necessário ter acesso aos servidores e bancos de dados internos do Twitter, também não é preciso entender como o Twitter é codificado. É necessário um intermediário entre o usuário e o back-end do Twitter, um intermediário em que o clinte pode solicitar (com alguns parâmetros) para obter alguns dados ou interagir com os serviços do Twitter. Em poucas palavras, uma API é isso: simplesmente uma junção entre dois aplicativos independentes que se comunicam entre si. Como abstração, a API do Twitter simplifica a integração com terceiros (desenvolvedores, aplicativos, outras APIs, etc.).
 
@@ -86,7 +86,7 @@ Aqui está o que se pode fazer com a API do Twitter:
 
 Logo, a API permite que você execute programaticamente qualquer ação que executaria manualmente na interface.
 
-# 3. Social network analysis ou Análise de rede social
+## 3. Social network analysis ou Análise de rede social
  
 A noção de rede social refere-se historicamente à abordagem estrutural de estudo dos grupos sociais. O conceito, que tem suas raízes na Sociologia há quase um século, principalmente através do trabalho do Jakob Moreno, ainda na década de 30, que sistematicamente coletou e analisou as interações sociais de alunos de escolhas, é uma das principais bases do que ele chamava de Sociometria. Na base, rede social significava a visão de um grupo social através de suas relações, considerando o grafo (estrutura de rede) como construto para tal.
 
@@ -117,9 +117,9 @@ Ele entrou em praticamente todos os campos - novamente, de acordo com a Wikipedi
 > “A análise de redes sociais emergiu como uma técnica chave na sociologia moderna. Também ganhou seguidores significativos em antropologia, biologia, demografia, estudos de comunicação, economia, geografia, história, ciência da informação, estudos organizacionais, ciência política, saúde pública, psicologia social, estudos de desenvolvimento, sociolinguística e ciência da computação e agora é comumente disponível como uma ferramenta de consumo (consulte a lista de software SNA).”
  
  
-# 4. O Algoritmo
+## 4. O Algoritmo
 
-## 4.1 Problema Proposto 
+### 4.1 Problema Proposto 
 
 Neste trabalho o objetivo é aplicar as estruturas em grafos para solucionar um problema real qualquer. Cada dupla de alunos deve escolher em literatura uma das áreas de aplicação do tema e propor uma solução baseada nos conceitos apresentados. Essa solução pode ser realizada utilizando C, C++ e/ou Python. O objetivo e mostrar a atuação de algoritmos clássicos em grafos na resolução de problemas emergentes. Alguns temas para inspiração são: Análise de rede social, rotas de entregas, análise de trafego (i.e., carros, pacotes na internet, etc), mínima quantidade de saltos em redes, teoria dos jogos, elaboração de horário vs rodízio de salas, envoltória convexa (do inglês, convex hull), etc.
 
@@ -136,7 +136,7 @@ Desta forma, o seguinte trabalho consiste em:
 	3) Utilizando os tweets tratados, criamos nós com palavras únicas, e ligamos essas palavras através de arestas com as outras palavras do tweet;     
 	4) A cada repetição de palavra e aresta adicionamos um valor ao item referente a estes, e no final plotamos o grafo usando o matplotlib.    
 
-## 4.2 Instalação
+### 4.2 Instalação
 
 Para rodar este código, é necessário instalar as bibliotecas a seguir.
 
@@ -151,7 +151,7 @@ pip3 install python-louvain
 pip3 install ipython
 ```
 
-## 4.3 Bibliotecas utilizadas
+### 4.3 Bibliotecas utilizadas
 
 https://github.com/barbrina/Twitter-Data-Analysis/blob/85e61f9f72a316351deb559c4158657fecbd8a2e/Final/Etapa1.py#L1-L7
 
@@ -167,11 +167,11 @@ As ferramentas utilizadas foram:
 - Codecs — salvar com codificação utf-8(manter acentos)
 - Nltk — remover stopwords
 
-## 4.4 Estrutura do algoritmo
+### 4.4 Estrutura do algoritmo
 
 Para extrair dados do Twitter devem ser seguidas as seguintes etapas. Em primeiro lugar, você deve obter as credenciais da API do Twitter no site do desenvolvedor do Twitter, que são a chave da API, a chave secreta da API, o token de acesso e o segredo do token de acesso.
 
-### <b>4.4.1 Criação de um aplicativo do Twitter e configurção das credenciais</b>
+#### <b>4.4.1 Criação de um aplicativo do Twitter e configurção das credenciais</b>
 
 Para poder reproduzir as etapas a seguir é necessário ter uma conta no Twitter. Para usar a API do Twitter, primeiro precisa-se registrar como desenvolvedor do Twitter, no site dos desenvolvedores. Uma vez registrado, e necessário criar um aplicativo do Twitter que irá configurar um monte de credenciais: essas credenciais serão usadas posteriormente pela biblioteca Tweepy para autenticação. 
 
@@ -183,7 +183,7 @@ Para poder reproduzir as etapas a seguir é necessário ter uma conta no Twitter
  <p> </p>
 </div>
 
-### <b>4.4.2 Conexão à API do Twitter</b>
+#### <b>4.4.2 Conexão à API do Twitter</b>
 
 Para começar, é necessário construir uma rede usando a conta pessoal do twitter. Para fazer isso, utiliza-se uma lista de todos os seguidores. Em seguida, obtêm-se todos os seguidores dos usuarios dessa lista. Para economizar tempo, para contas com mais de 5.000 seguidores, extrai-se apenas os primeiros 5.000 de seus seguidores.
 
@@ -204,8 +204,8 @@ Com o Tweepy, podemos usar essas credenciais para nos conectar à API do Twitter
 
 https://github.com/barbrina/Twitter-Data-Analysis/blob/85e61f9f72a316351deb559c4158657fecbd8a2e/Final/Etapa1.py#L19-L25
 
-### <b>4.4.3 Etapa 1: Usuário mais importante</b>
-#### <b>4.4.3.1 Raspagem de dados</b>
+#### <b>4.4.3 Etapa 1: Usuário mais importante</b>
+##### <b>4.4.3.1 Raspagem de dados</b>
 
 Para iniciar o download dos dados, obteremos todos os seguidores de um usuário individual. Para obter isso, você precisa do ID do usuário. Você pode obter o ID de usuário de um usuário se souber seu nome de tela usando o código abaixo.
 
@@ -255,11 +255,9 @@ https://github.com/barbrina/Twitter-Data-Analysis/blob/85e61f9f72a316351deb559c4
 
 Como a rede é muito grande agora (mais de 41 mil nós), qualquer análise levará muito tempo para ser executada e qualquer visualização será uma bagunça completa, desta forma, filtrarei a rede para um número mais gerenciável de nós. Isso é feito usando a função k_core do NetworkX. A função k_core filtra os nós com grau menor que um determinado número, k. Neste exemplo, defino k igual a 4, o que reduz o número de nós no gráfico para cerca de 300.
 
-#### <b>4.4.3.2 Análise de conexões</b>
+##### <b>4.4.3.2 Análise de conexões</b>
 
 Com esse gráfico menor, podemos facilmente fazer algumas análises de rede. Começamos dividindo o gráfico em grupos usando um <a href="https://github.com/barbrina/Twitter-Data-Analysis/wiki/Analisando-conex%C3%B5es-de-perfis-pessoais-do-Twitter">algoritmo de detecção de comunidade</a>. Dessa forma, nós precisamos executar o código de centralidade de grau novamente agora que nossa rede é menor. Agora que temos os nós divididos em grupos e o grau de cada nó, nós os combinamos em um DataFrame. Em seguida, podemos visualizar este gráfico e salvá-lo em um arquivo png. 
-
-#### <b>4.4.3.3 Visualização no Gephi</b>
 
 Com esse gráfico menor, podemos facilmente fazer algumas análises de rede. Começamos dividindo o gráfico em grupos usando um algoritmo de detecção de comunidade. Dessa forma, nós precisamos executar o código de centralidade de grau novamente agora que nossa rede é menor. Agora que temos os nós divididos em grupos e o grau de cada nó, nós os combinamos em um DataFrame. Em seguida, podemos visualizar este gráfico e salvá-lo em um arquivo png. 
 
@@ -275,7 +273,7 @@ Isso deve criar um gráfico parecido com isto:
  <p> </p>
 </div>
 
-#### <b>4.4.3.4 Visualização no Gephi</b>
+##### <b>4.4.3.3 Visualização no Gephi</b>
 
 Em seguida, exportaremos os arquivos para o formato csv e usaremos o Gephi para visualizar. Gephi é um software de análise e visualização de rede de código aberto. Você deve ser capaz de instalá-lo facilmente gratuitamente no site deles.
 
@@ -283,7 +281,7 @@ Para usar o Gephi, primeiro é necessário exportar a lista de nós e a lista de
 
 https://github.com/barbrina/Twitter-Data-Analysis/blob/85e61f9f72a316351deb559c4158657fecbd8a2e/Final/Etapa1.py#L138-L142
 
-### <b>4.4.4 Etapa 2 - Assunto mais importante</b>
+#### <b>4.4.4 Etapa 2 - Assunto mais importante</b>
 
 Para descobrir o assunto mais importante da rede do usuário mais influente seguimos a seguinte tática:
 
@@ -293,7 +291,7 @@ Para descobrir o assunto mais importante da rede do usuário mais influente segu
 4) São retiradas as palavras de menos importância (aparecem menos que 100 vezes) e as conexões que elas fazem;
 5) Plota-se o grafo.
 
-#### <b>4.4.4.1 Extração de Tweets</b>
+##### <b>4.4.4.1 Extração de Tweets</b>
 
 Extraímos o id usuário mais influente do arquivo "nodes.csv";
 
@@ -307,14 +305,14 @@ A partir dos ids encontrados (excluindo-se os que possuem twitter privado), obte
 
 https://github.com/barbrina/Twitter-Data-Analysis/blob/ddf123a492798b6a2c42deed7efaaea0e50ed2af/Final/Etapa2.py#L2628-L2641
 
-#### <b>4.4.4.2 Tratamento de texto</b>
+##### <b>4.4.4.2 Tratamento de texto</b>
 
 Para não ser necessária a repetição da pesquisa, já que temos limite de pesquisas, salva-se os tweets em um arquivo, com uma sequência de caracteres(;;;) no final de cada tweet, que será utilizada para quebrar os tweets depois do tratamento. E como tratamento inicial, retira-se todos os emojis do tweet com a função [deEmojify](https://gist.github.com/slowkow/7a7f61f495e3dbb7e3d767f97bd7304b?permalink_comment_id=4071933#gistcomment-4071933).     
 A seguir fazemos o tratamento adicional de todos os tweets, removendo caracteres e links, e stopwords, utilizando as bibliotecas Regex e Nltk:
 
 https://github.com/barbrina/Twitter-Data-Analysis/blob/ddf123a492798b6a2c42deed7efaaea0e50ed2af/Final/Etapa2.py#L2649-L2664
 
-#### <b>4.4.4.3 Construção do grafo</b>
+##### <b>4.4.4.3 Construção do grafo</b>
 
 Utilizando a sequência de caracteres definida, quebramos os tweets em um array (*data_set=texto.split("; ; ;")*). Em seguida começamos a criar nosso grafo:
 
@@ -349,7 +347,8 @@ A seguir utilizamos a função visualize da classe de grafo, essa função funci
 
  https://github.com/barbrina/Twitter-Data-Analysis/blob/ddf123a492798b6a2c42deed7efaaea0e50ed2af/Final/Etapa2.py#L2595-L2599
 
-#### <b>4.4.3.4 Visualização no Gephi</b>
+##### <b>4.4.3.4 Visualização no Gephi</b>
+
 Utilizando a função **write_gexf** disponível na biblioteca networkx podemos criar um arquivo .gexf após a criação do nosso grafo na função *visualize*. Abrindo esse arquivo com o gephi e utilizando o rankeamento por peso podemos observar o resultado final da rede
 
 ## 5. Resultados e Análises
